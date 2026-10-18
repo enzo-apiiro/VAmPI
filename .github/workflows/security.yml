@@ -24,7 +24,7 @@ jobs:
         include:
           - language: python
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: github/codeql-action/init@v4
         with:
           languages: ${{ matrix.language }}
@@ -37,7 +37,7 @@ jobs:
     name: OSV-Scanner (SCA)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Scan dependencies
         run: |
           docker run --rm -v "$PWD:/src" ghcr.io/google/osv-scanner:latest scan source --recursive --format sarif /src > osv-results.sarif || true
@@ -51,7 +51,7 @@ jobs:
     name: Gitleaks (secrets)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Scan for secrets
@@ -67,7 +67,7 @@ jobs:
     name: Trivy (IaC, container config, vulns)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Run Trivy
         run: |
           docker run --rm -v "$PWD:/src" ghcr.io/aquasecurity/trivy:latest fs --scanners vuln,misconfig,secret --severity CRITICAL,HIGH,MEDIUM --format sarif --output /src/trivy-results.sarif /src
@@ -102,7 +102,7 @@ jobs:
         include:
           - language: python
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: github/codeql-action/init@v3
         with:
           languages: ${{ matrix.language }}
@@ -115,7 +115,7 @@ jobs:
     name: OSV-Scanner (SCA)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Scan dependencies
         run: |
           docker run --rm -v "$PWD:/src" ghcr.io/google/osv-scanner:latest scan source --recursive --format sarif /src > osv-results.sarif || true
@@ -129,7 +129,7 @@ jobs:
     name: Gitleaks (secrets)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Scan for secrets
@@ -145,7 +145,7 @@ jobs:
     name: Trivy (IaC, container config, vulns)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: aquasecurity/trivy-action@0.28.0
         with:
           scan-type: fs
